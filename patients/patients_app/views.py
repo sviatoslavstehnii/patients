@@ -1,0 +1,36 @@
+from django.shortcuts import render, redirect
+
+from .models import Patient
+from .forms import PatientForm
+
+def index(request):
+    """View function for home page of site."""
+    return render(request, 'patients_app/index.html')
+
+
+def create_patient(request):
+    """View function for creating a patient."""
+
+    if request.method == 'POST':
+        form = PatientForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return redirect('/patients_list')
+
+    form = PatientForm()
+    context = {
+        'form': form
+    }
+    return render(request, 'patients_app/create_patient.html', context)
+
+
+
+def patients_list(request):
+    patients = Patient.objects.all()
+    return render(request, 'patients_app/patients_list.html', {'patients': patients})
+
+def add_visit(request):
+    return render(request, 'patients_app/add_visit.html')
+
+def calendar(request):
+    return render(request, 'patients_app/calendar.html')

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<body>
+    <h1>Patients List</h1>
+    <div class="container">
+        {% for patient in patients %}
+        <p>{{ patient.name }}</p>
+        {% endfor %}
+    </div>
+</body>
+{% endblock %}

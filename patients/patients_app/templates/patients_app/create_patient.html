@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block body%}
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <form method="POST">
+                    {% csrf_token %}
+                    <table>
+                        {{ form.as_table }}
+                    </table>
+                    <button class="button is-success is-fullwidth is-medium mt-5"
+                                type="submit">Submit
+                        </button>
+                </form>
+            </div>
+        </div>
+    </div>
+<!-- <form method="POST">
+    {% csrf_token %}
+    <table>
+        {{ form.as_table }}
+    </table>
+    <button class="button is-success is-fullwidth is-medium mt-5"
+                type="submit">Dweet
+        </button>
+</form> -->
+{% endblock %}
