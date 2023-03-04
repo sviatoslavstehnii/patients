@@ -1,9 +1,13 @@
 {% extends 'base.html' %}
 
 {% block body %}
-<form method="post">
-    {% csrf_token %}
-    {{ form }}
-    <button class="button is-success is-fullwidth is-medium mt-5" type="submit">Submit</button>
-</form>
+<div style="display: flex; justify-content: center; align-items: center; margin-top: 2em;">
+    <form method="post">
+        <table>
+            {% csrf_token %}
+            {{ form.as_table }}
+        </table>
+    <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
+</div>
 {% endblock %}
