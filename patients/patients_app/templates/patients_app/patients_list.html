@@ -2,14 +2,18 @@
 
 {% block body %}
 <body>
-    <h1>Patients List</h1>
     <div class="container">
         {% for patient in patients %}
-        <form>
-            <p>{{ patient.name }}</p>
-            <p>{{ patient.age }}</p>
-            <a href="{% url 'update_patient' patient.id %}">edit</a>
-        </form>
+        <div class="card" style="margin: 1rem;">
+            <div class="card-body">
+                <h5 class="card-title">{{ patient.name }}, {{ patient.age }}</h5>
+                <p class="card-text">Doctor: {{ patient.doctor }}</p>
+                <p class="card-text">{{ patient.phone }}</p>
+                <p class="card-text">{{ patient.medical_history }}</p>
+                <a href="{% url 'update_patient' patient.id %}" class="button" style="display: inline-block;
+                border: 1px solid #ccc; background-color: #f5f5f5; color: #333; padding: 0.5em 1em; text-decoration: none; font-weight: bold; border-radius: 3px; cursor: pointer;">edit</a>
+              </div>
+        </div>
         {% endfor %}
     </div>
 </body>
