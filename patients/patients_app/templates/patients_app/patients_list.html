@@ -5,7 +5,11 @@
     <h1>Patients List</h1>
     <div class="container">
         {% for patient in patients %}
-        <p>{{ patient.name }}</p>
+        <form>
+            <p>{{ patient.name }}</p>
+            <p>{{ patient.age }}</p>
+            <a href="{% url 'update_patient' patient.id %}">edit</a>
+        </form>
         {% endfor %}
     </div>
 </body>

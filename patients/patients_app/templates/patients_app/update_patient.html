@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<form method="post">
+    {% csrf_token %}
+    {{ form }}
+    <button class="button is-success is-fullwidth is-medium mt-5" type="submit">Submit</button>
+</form>
+{% endblock %}

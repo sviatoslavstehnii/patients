@@ -29,6 +29,19 @@ def patients_list(request):
     patients = Patient.objects.all()
     return render(request, 'patients_app/patients_list.html', {'patients': patients})
 
+def update_patient(request, pk):
+    patient = Patient.objects.get(id=pk)
+    form = PatientForm(instance=patient)
+
+    if request.method == 'POST':
+        form = PatientForm(request.POST, instance=patient)
+        if form.is_valid():
+            form.save()
+            return redirect('/patients_list')
+
+    context = {'form': form}
+    return render(request, 'patients_app/update_patient.html', context)
+
 def add_visit(request):
     return render(request, 'patients_app/add_visit.html')
 
