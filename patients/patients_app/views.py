@@ -10,7 +10,6 @@ def index(request):
 
 def create_patient(request):
     """View function for creating a patient."""
-
     if request.method == 'POST':
         form = PatientForm(request.POST)
         if form.is_valid():
@@ -26,7 +25,11 @@ def create_patient(request):
 
 
 def patients_list(request):
-    patients = Patient.objects.all()
+    query = request.GET.get('q')
+    if query:
+        patients = Patient.objects.filter(name__icontains=query)
+    else:
+        patients = Patient.objects.all()
     return render(request, 'patients_app/patients_list.html', {'patients': patients})
 
 def update_patient(request, pk):
