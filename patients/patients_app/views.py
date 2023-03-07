@@ -32,6 +32,7 @@ def patients_list(request):
         patients = Patient.objects.all()
     return render(request, 'patients_app/patients_list.html', {'patients': patients})
 
+
 def update_patient(request, pk):
     patient = Patient.objects.get(id=pk)
     form = PatientForm(instance=patient)
@@ -44,6 +45,16 @@ def update_patient(request, pk):
 
     context = {'form': form}
     return render(request, 'patients_app/update_patient.html', context)
+
+
+def ask_delete(request, pk):
+    patient = Patient.objects.get(id=pk)
+
+    if request.method == "POST":
+        patient.delete()
+        return redirect('/patients_list')
+    return render(request, 'patients_app/delete.html', {'patient': patient})
+
 
 def add_visit(request):
     return render(request, 'patients_app/add_visit.html')

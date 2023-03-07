@@ -16,7 +16,8 @@
                 <p class="card-text">{{ patient.phone }}</p>
                 <p class="card-text">{{ patient.medical_history }}</p>
                 <a href="{% url 'update_patient' patient.id %}" style="display: inline-block;
-                border: 1px solid #ccc; background-color: #f5f5f5; color: #333; padding: 0.5em 1em; text-decoration: none; font-weight: bold; border-radius: 3px; cursor: pointer;">edit</a>
+                border: 1px solid #ccc; background-color: #d1eaf9; color: #333; padding: 0.5em 1em; text-decoration: none; font-weight: bold; border-radius: 3px; cursor: pointer;">Edit</a>
+                <a href="{% url 'ask_delete' patient.id %}" style="display: inline-block; border: 1px solid #ccc; background-color: #e68d92; color: #000; padding: 0.5em 1em; text-decoration: none; font-weight: bold; border-radius: 3px; cursor: pointer;">Delete</a>
               </div>
         </div>
         {% endfor %}
