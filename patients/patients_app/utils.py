@@ -15,7 +15,7 @@ class Calendar(HTMLCalendar):
         events_per_day = events_per_day.order_by('start_time')
         occupied_hours = []
         d = ''
-        hours = []
+        hours = [('9:00', '19:00', 'free')]
         for event in events_per_day:
             visit_time_start = event.start_time.strftime('%H:%M')
             visit_time_end = event.end_time.strftime('%H:%M')
@@ -28,9 +28,9 @@ class Calendar(HTMLCalendar):
             if len(i) == 2:
                 d += f'<li style="list-style-type: none; background-color:#75E6DA"> {i[0]} - {i[1]} </li>'
             else:
-                d += f'<li style="list-style-type: none; background-color: #E3FCFF"> {i[0]} - {i[1]} FREE</li>'
+                d += f'<li style="list-style-type: none; background-color: #E3FCFF"> {i[0]} - {i[1]} free</li>'
         if day != 0:
-            return f"<td><span class='date'>{day}</span><ul> {d} </ul></td>"
+            return f"<td><a href='events/{day}' class='date'>{day}</a><ul> {d} </ul></td>"
         return '<td></td>'
 
     # formats a week as a tr
@@ -68,5 +68,4 @@ def schedule(occupied_slots):
             result[i] = list(x) + ['free']
             result[i] = tuple(result[i])
 
-    print(result)
     return result

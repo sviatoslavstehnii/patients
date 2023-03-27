@@ -53,6 +53,19 @@ def update_patient(request, pk):
     context = {'form': form}
     return render(request, 'patients_app/update_patient.html', context)
 
+def update_event(request, pk):
+    event = Event.objects.get(id=pk)
+    form = EventForm(instance=event)
+
+    if request.method == 'POST':
+        form = EventForm(request.POST, instance=event)
+        if form.is_valid():
+            form.save()
+            return redirect('/calendar')
+
+    context = {'form': form}
+    return render(request, 'patients_app/update_event.html', context)
+
 
 def ask_delete(request, pk):
     patient = Patient.objects.get(id=pk)
@@ -61,6 +74,14 @@ def ask_delete(request, pk):
         patient.delete()
         return redirect('/patients_list')
     return render(request, 'patients_app/delete.html', {'patient': patient})
+
+def delete_event(request, pk):
+    event = Event.objects.get(id=pk)
+
+    if request.method == "POST":
+        event.delete()
+        return redirect('/calendar')
+    return render(request, 'patients_app/delete_event.html', {'event': event})
 
 
 def add_visit(request):
@@ -102,14 +123,20 @@ def next_month(d):
     month = 'month=' + str(next_month.year) + '-' + str(next_month.month)
     return month
 
-def event(request, event_id=None):
+def event(request, event_id=None, day_id=None):
     instance = Event()
+    context = {'events': None}
+    if day_id:
+        events = Event.objects.filter(start_time__day=day_id)
+        context['events'] = events
     if event_id:
         instance = get_object_or_404(Event, pk=event_id)
     else:
         instance = Event()
 
     form = EventForm(request.POST or None, instance=instance)
+
+
     if request.POST and form.is_valid():
         events = Event.objects.all()
         events = events.filter(start_time__day=form.cleaned_data['start_time'].day)
@@ -120,4 +147,5 @@ def event(request, event_id=None):
                 return redirect('/event/new')
         form.save()
         return HttpResponseRedirect(reverse('calendar'))
-    return render(request, 'patients_app/event.html', {'form': form})
+    context['form'] = form
+    return render(request, 'patients_app/event.html', context)
