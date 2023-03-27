@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from datetime import datetime, timedelta
 from django.utils.safestring import mark_safe
 from django.views import generic
+from django.contrib import messages
 from .utils import Calendar
 from .forms import PatientForm, EventForm
 import calendar as clndr
@@ -65,8 +66,8 @@ def ask_delete(request, pk):
 def add_visit(request):
     return render(request, 'patients_app/add_visit.html')
 
-def calendar(request):
-    return render(request, 'patients_app/calendar.html')
+# def calendar(request):
+#     return render(request, 'patients_app/calendar.html')
 
 class CalendarView(generic.ListView):
     model = Event
@@ -110,6 +111,13 @@ def event(request, event_id=None):
 
     form = EventForm(request.POST or None, instance=instance)
     if request.POST and form.is_valid():
+        events = Event.objects.all()
+        events = events.filter(start_time__day=form.cleaned_data['start_time'].day)
+        for event in events:
+            if event.start_time <= form.cleaned_data['start_time'] <= event.end_time\
+                  or event.start_time <= form.cleaned_data['end_time'] <= event.end_time\
+                    or form.cleaned_data['start_time'] <= event.start_time or form.cleaned_data['end_time'] >= event.end_time:
+                return redirect('/event/new')
         form.save()
         return HttpResponseRedirect(reverse('calendar'))
     return render(request, 'patients_app/event.html', {'form': form})
