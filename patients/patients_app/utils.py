@@ -20,9 +20,10 @@ class Calendar(HTMLCalendar):
             visit_time_start = event.start_time.strftime('%H:%M')
             visit_time_end = event.end_time.strftime('%H:%M')
             occupied_hours.append((visit_time_start, visit_time_end))
-            # d += f'<li> {visit_time_start} - {visit_time_end} </li>'
         if len(events_per_day) > 1:
             hours = schedule(occupied_hours)
+        elif len(events_per_day) == 1:
+            hours = [('9:00', occupied_hours[0][0], 'free'), (occupied_hours[0][0], occupied_hours[0][1]), (occupied_hours[0][1], '19:00', 'free')]
         for i in hours:
             if len(i) == 2:
                 d += f'<li style="list-style-type: none; background-color:#75E6DA"> {i[0]} - {i[1]} </li>'
