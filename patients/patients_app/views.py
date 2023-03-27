@@ -116,7 +116,7 @@ def event(request, event_id=None):
         for event in events:
             if event.start_time <= form.cleaned_data['start_time'] <= event.end_time\
                   or event.start_time <= form.cleaned_data['end_time'] <= event.end_time\
-                    or form.cleaned_data['start_time'] <= event.start_time or form.cleaned_data['end_time'] >= event.end_time:
+                    or (form.cleaned_data['start_time'] <= event.start_time and form.cleaned_data['end_time'] >= event.end_time):
                 return redirect('/event/new')
         form.save()
         return HttpResponseRedirect(reverse('calendar'))
