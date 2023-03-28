@@ -271,3 +271,23 @@ label{
   border-radius: 0.5em;
   cursor: pointer;
 }
+
+.button{
+  background-color: #03293972;
+  padding: 7px;
+  border-radius: 0.7em 0.7em 0.7em 0.7em;
+  border:0ch;
+  font-family: 'Fira Sans', sans-serif;
+  font-family: 'Outfit', sans-serif;
+  font-size: 15px;
+  color: #E3FCFF;
+  font-weight:600;
+}
+
+.new_event{
+  float: right;
+}
+
+.calendar{
+  color: #E3FCFF;
+}
