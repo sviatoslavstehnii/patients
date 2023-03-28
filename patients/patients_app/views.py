@@ -84,9 +84,6 @@ def delete_event(request, pk):
     return render(request, 'patients_app/delete_event.html', {'event': event})
 
 
-def add_visit(request):
-    return render(request, 'patients_app/add_visit.html')
-
 # def calendar(request):
 #     return render(request, 'patients_app/calendar.html')
 
