@@ -1,82 +1,298 @@
 /* Common styles */
 .calendar {
-  width: 98%;
-  margin: auto;
-  font-size: 13px;
-}
-
-.calendar tr, .calendar td {
-  border: 1px solid black;
-}
-
-.calendar th {
-  padding: 10px;
-  text-align: center;
-  font-size: 18px;
-}
-
-.calendar td {
-  width: 200px;
-  height: 150px;
-  padding: 20px 0px 0px 5px;
-}
-
-.month {
-  font-size: 25px;
-}
-
-.date {
-  font-size: 16px;
-}
-
-ul {
-  height: 100%;
-  padding: 0px 5px 0px 20px;
-}
-
-a {
-  color: #17a2b8;
-}
-body {
-  font-family: "ptsans", "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-
-.left {
-  float: left;
-}
-
-.right {
-  float: right;
-}
-
-.btn {
-  outline: none;
-  color: black;
-  background-color: transparent;
-  box-shadow: 0 0 0 0;
-  margin-right: 3px;
-}
-
-.clearfix {
-  margin: 15px;
-}
-
-.form {
-  margin: auto;
-}
-
-.form input, .form select, .form textarea {
-  border-radius: 5px;
-  border: 1px solid #17a2b8;
-  outline: none;
-  background: none;
-  padding: 5px;
-  width: 100%;
-}
-
-/* App styles */
-.title {
-  text-align: center;
-  margin: 10px;
-}
-
+    width: 98%;
+    margin: auto;
+    font-size: 13px;
+  }
+  
+  .calendar tr, .calendar td {
+    border: 1px solid black;
+  }
+  
+  .calendar th {
+    padding: 10px;
+    text-align: center;
+    font-size: 18px;
+  }
+  
+  .calendar td {
+    width: 200px;
+    height: 150px;
+    padding: 20px 0px 0px 5px;
+  }
+  
+  .month {
+    font-size: 25px;
+  }
+  
+  .date {
+    font-size: 16px;
+  }
+  
+  ul {
+    height: 100%;
+    padding: 0px 5px 0px 20px;
+  }
+  
+  a {
+    color: #17a2b8;
+  }
+  body {
+    font-family: "ptsans", "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+  
+  .left {
+    float: left;
+  }
+  
+  .right {
+    float: right;
+  }
+  
+  .btn {
+    outline: none;
+    color: black;
+    background-color: transparent;
+    box-shadow: 0 0 0 0;
+    margin-right: 3px;
+  }
+  
+  .clearfix {
+    margin: 15px;
+  }
+  
+  .form {
+    margin: auto;
+  }
+  
+  /* .form input, .form select, .form textarea {
+    border-radius: 5px;
+    border: 1px solid #17a2b8;
+    outline: none;
+    background: none;
+    padding: 5px;
+    width: 100%;
+  } */
+  
+  /* App styles */
+  .title {
+    text-align: center;
+    margin: 10px;
+  }
+  
+  body {
+    background-image: linear-gradient(to bottom right, #248b81, #05445E);
+    /* display: grid; */
+    margin-top: 50px;
+    /* justify-content: center; */
+    min-height: 100vh;
+    place-items: right;
+  }
+  .create{
+    font-family: 'Fira Sans', sans-serif;
+    font-family: 'Outfit', sans-serif;
+    font-weight:600;
+    color: #E3FCFF;
+    font-size: xx-large;
+    margin: 5px;
+  }
+  .form-control{
+    background-color: #03293972 !important;
+    padding: 15px !important;
+    border-radius: 1em 1em 1em 1em !important;
+    border:0ch !important;
+    color: #E3FCFF !important;
+    width: 400px !important;
+    margin:5px;
+  }
+  .form-control-first{
+    background-color: #03293972;
+    padding: 15px;
+    border-radius: 2px 2px 2px 2px !important;
+    border:0ch;
+    color: #E3FCFF;
+    width: 135px;
+    margin:5px;
+  }
+  .form-control-second{
+    background-color: #03293972;
+    width: 225px;
+    padding: 15px;
+    border-radius: 1em 1em 1em 1em;
+    border:0ch;
+    color: #E3FCFF;
+    margin:5px;
+  }
+  .form-control-notes{
+    background-color: #03293972;
+    padding: 15px;
+    border-radius: 1em 1em 1em 1em;
+    border:0ch;
+    color: #E3FCFF;
+    width: 400px;
+    margin:5px;
+    justify-content: start;
+    font-family: 'Fira Sans', sans-serif;
+  }
+  .line{
+    display:flex;
+    /* width: 300px; */
+  }
+  ::placeholder {
+    color: #9db1b3 !important;
+    opacity: 1;
+    font-family: 'Outfit', sans-serif;
+  }
+  .submit, .submit2, .submit3{
+    background-color: #E3FCFF;
+    margin-left: -200px;
+    padding: 5px;
+    width: 100px;
+    border-radius: 0.7em 0.7em 0.7em 0.7em;
+    border:0ch;
+    font-family: 'Fira Sans', sans-serif;
+    font-family: 'Outfit', sans-serif;
+    font-size: 20px;
+    color: #05445E;
+    font-weight:600;
+  }
+  .submit2{
+    margin-left: 130px;
+  }
+  .submit3{
+    margin-left: 0px;
+    margin-top: 3px;
+    height: 60px;
+  }
+  .log-in{
+    background-color: #03293972;
+    padding: 3%;
+    width: 125px;
+    border-radius: 0.7em 0.7em 0.7em 0.7em;
+    border:0ch;
+    font-family: 'Fira Sans', sans-serif;
+    font-size: 20px;
+    color: #E3FCFF;
+  }
+  .main-text{
+    font-family: 'Fira Sans', sans-serif;
+    font-size: 25px;
+    color: #E3FCFF;
+    align-self:center;
+  }
+  
+  .item{
+    align-self:start;
+    display: grid;
+    place-items:start;
+    width: 30px;
+    margin-bottom: 50px;
+  }
+  
+  .plus{
+    align-self:start;
+    display: grid;
+    place-items:start;
+    width: 35px;
+    margin-bottom: 20px;
+    margin-left: 25px;
+  }
+  
+  .form input {
+    color-scheme: dark !important;
+    color: white;
+    font-family: 'Outfit', sans-serif;
+  }
+  .from-to{
+    font-family: 'Fira Sans', sans-serif;
+    font-family: 'Outfit', sans-serif;
+    font-weight:500;
+    color: #E3FCFF;
+    font-size: x-large;
+    margin:0px;
+    margin-left: 5px;
+  }
+  
+  label{
+    color: #E3FCFF;
+    font-family: 'Outfit', sans-serif;
+  }
+  
+  .create_div{
+    margin-left: 460pt;
+  }
+  
+  .card{
+    margin: 1rem;
+    background-color: #E3FCFF;
+    border-width: 0px;
+    border-radius: 1em 1em 1em 1em !important;
+  }
+  
+  .card-body{
+    background-color: #E3FCFF;
+    border-width: 0px;
+    border-radius: 1em 1em 1em 1em !important;
+  }
+  
+  .card-title{
+    font-family: 'Fira Sans', sans-serif;
+    font-family: 'Outfit', sans-serif !important;
+    font-weight:700;
+    color: #05445E !important;
+  }
+  .card-text{
+    font-family: 'Fira Sans', sans-serif;
+    font-family: 'Outfit', sans-serif !important;
+    font-weight:500;
+    color: #05445E !important;
+  }
+  
+  .edit{
+    display: inline-block;
+    border: 0px;
+    background-color: #a4dae0;
+    color: #05445E;
+    padding: 0.5em 1em;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 0.5em;
+    cursor: pointer;
+  }
+  
+  .delete{
+    display: inline-block;
+    border: 0px;
+    color: #E3FCFF;
+    background-color: #05445E;
+    padding: 0.5em 1em;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 0.5em;
+    cursor: pointer;
+  }
+  
+  .button{
+    background-color: #03293972;
+    padding: 7px;
+    border-radius: 0.7em 0.7em 0.7em 0.7em;
+    border:0ch;
+    font-family: 'Fira Sans', sans-serif;
+    font-family: 'Outfit', sans-serif;
+    font-size: 15px;
+    color: #E3FCFF;
+    font-weight:600;
+  }
+  
+  .new_event{
+    float: right;
+  }
+  
+  .calendar{
+    color: #E3FCFF;
+  }
+  
+  .navbar-brand{
+    color: #E3FCFF !important;
+    font-weight:700;
+  }

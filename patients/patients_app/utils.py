@@ -26,11 +26,11 @@ class Calendar(HTMLCalendar):
             hours = [('9:00', occupied_hours[0][0], 'free'), (occupied_hours[0][0], occupied_hours[0][1]), (occupied_hours[0][1], '19:00', 'free')]
         for i in hours:
             if len(i) == 2:
-                d += f'<li style="list-style-type: none; background-color:#75E6DA"> {i[0]} - {i[1]} </li>'
+                d += f'<li style="list-style-type: none; background-color:#189AB4; padding: 3px; border-radius: 0.3em 0.3em 0.3em 0.3em;"> {i[0]} - {i[1]} </li>'
             else:
-                d += f'<li style="list-style-type: none; background-color: #E3FCFF"> {i[0]} - {i[1]} free</li>'
+                d += f'<li style="list-style-type: none; background-color:#03293972; padding: 3px; border-radius: 0.3em 0.3em 0.3em 0.3em;"> {i[0]} - {i[1]} free</li>'
         if day != 0:
-            return f"<td><a href='events/{day}' class='date'>{day}</a><ul> {d} </ul></td>"
+            return f"<td><a href='events/{day}' style='color: #E3FCFF !important;' class='date'>{day}</a><ul> {d} </ul></td>"
         return '<td></td>'
 
     # formats a week as a tr

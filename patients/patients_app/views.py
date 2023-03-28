@@ -76,7 +76,7 @@ def patients_list(request):
             patients = Patient.objects.filter(name__icontains=query)
         else:
             patients = Patient.objects.all()
-        patients = Patient.objects.filter(user=request.user)
+        patients = patients.filter(user=request.user)
         return render(request, 'patients_app/patients_list.html', {'patients': patients})
     else:
         return redirect('/login')
