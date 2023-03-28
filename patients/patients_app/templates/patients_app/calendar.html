@@ -1,7 +1,9 @@
+{% extends 'base.html' %}
 {% load static %}
 <!doctype html>
 <html lang="en">
 
+{% block head %}
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
@@ -14,8 +16,10 @@
   <link rel="stylesheet" type="text/css" href="{% static 'patients_app/css/styles.css' %}">
   <title>Calendar</title>
 </head>
-<body>
+{% endblock %}
 
+{% block body %}
+<body>
   <h1 class="title">{% block title %}{% endblock %}</h1>
   <hr>
 
@@ -42,4 +46,5 @@
   {% block script %}
   {% endblock %}
 </body>
+{% endblock %}
 </html>

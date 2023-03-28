@@ -291,3 +291,8 @@ label{
 .calendar{
   color: #E3FCFF;
 }
+
+.navbar-brand{
+  color: #E3FCFF !important;
+  font-weight:700;
+}
