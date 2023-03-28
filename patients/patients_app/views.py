@@ -173,28 +173,32 @@ def next_month(d):
     return month
 
 def event(request, event_id=None, day_id=None):
-    instance = Event()
     context = {'events': None}
     if day_id:
         events = Event.objects.filter(start_time__day=day_id)
+        events = events.filter(user=request.user)
         context['events'] = events
     if event_id:
         instance = get_object_or_404(Event, pk=event_id)
     else:
         instance = Event()
 
-    form = EventForm(request.POST or None, instance=instance)
+    if request.method == 'POST':
+        form = EventForm(request.POST, instance=instance)
+        if form.is_valid():
+            events = Event.objects.all()
+            events = events.filter(start_time__day=form.cleaned_data['start_time'].day)
+            for event in events:
+                if event.start_time <= form.cleaned_data['start_time'] <= event.end_time \
+                        or event.start_time <= form.cleaned_data['end_time'] <= event.end_time \
+                        or (form.cleaned_data['start_time'] <= event.start_time and form.cleaned_data['end_time'] >= event.end_time):
+                    return redirect('/event/new')
+            event = form.save(commit=False)
+            event.user = request.user
+            event.save()
+            return HttpResponseRedirect(reverse('calendar'))
+    else:
+        form = EventForm(instance=instance)
 
-
-    if request.POST and form.is_valid():
-        events = Event.objects.all()
-        events = events.filter(start_time__day=form.cleaned_data['start_time'].day)
-        for event in events:
-            if event.start_time <= form.cleaned_data['start_time'] <= event.end_time\
-                  or event.start_time <= form.cleaned_data['end_time'] <= event.end_time\
-                    or (form.cleaned_data['start_time'] <= event.start_time and form.cleaned_data['end_time'] >= event.end_time):
-                return redirect('/event/new')
-        form.save()
-        return HttpResponseRedirect(reverse('calendar'))
     context['form'] = form
     return render(request, 'patients_app/event.html', context)
