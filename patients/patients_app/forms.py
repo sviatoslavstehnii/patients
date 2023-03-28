@@ -1,9 +1,9 @@
 from django import forms
 from .models import Patient, Event
 from django.forms import ModelForm, DateInput
+from datetime import datetime, timedelta
 
 class PatientForm(forms.ModelForm):
-
     class Meta:
         model = Patient
         fields = '__all__'
@@ -38,3 +38,5 @@ class EventForm(ModelForm):
     self.fields['end_time'].widget.attrs.update({'class': 'form-control'})
     self.fields['description'].widget.attrs.update({'class': 'form-control-notes', 'placeholder': 'Notes'})
     self.fields['title'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Patient'})
+    self.fields['start_time'].widget.attrs['min'] = datetime.now().strftime('%Y-%m-%dT%H:%M')
+    self.fields['end_time'].widget.attrs['min'] = self.fields['start_time'].widget.attrs['min']
