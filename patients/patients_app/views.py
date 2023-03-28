@@ -14,6 +14,7 @@ from django.views.generic.edit import FormView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class CustomLoginView(LoginView):
@@ -50,79 +51,95 @@ def index(request):
 
 def create_patient(request):
     """View function for creating a patient."""
-    if request.method == 'POST':
-        form = PatientForm(request.POST)
-        if form.is_valid():
-            patient = form.save(commit=False)
-            patient.user = request.user
-            patient.save()
-            return redirect('/patients_list')
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            form = PatientForm(request.POST)
+            if form.is_valid():
+                patient = form.save(commit=False)
+                patient.user = request.user
+                patient.save()
+                return redirect('/patients_list')
 
-    form = PatientForm()
-    context = {
-        'form': form
-    }
-    return render(request, 'patients_app/create_patient.html', context)
+        form = PatientForm()
+        context = {
+            'form': form
+        }
+        return render(request, 'patients_app/create_patient.html', context)
+    else:
+        return redirect('/login')
 
 
 def patients_list(request):
-    query = request.GET.get('q')
-    if query:
-        patients = Patient.objects.filter(name__icontains=query)
+    if request.user.is_authenticated:
+        query = request.GET.get('q')
+        if query:
+            patients = Patient.objects.filter(name__icontains=query)
+        else:
+            patients = Patient.objects.all()
+        patients = Patient.objects.filter(user=request.user)
+        return render(request, 'patients_app/patients_list.html', {'patients': patients})
     else:
-        patients = Patient.objects.all()
-    patients = Patient.objects.filter(user=request.user)
-    return render(request, 'patients_app/patients_list.html', {'patients': patients})
-
+        return redirect('/login')
 
 def update_patient(request, pk):
-    patient = Patient.objects.get(id=pk)
-    form = PatientForm(instance=patient)
+    if request.user.is_authenticated:
+        patient = Patient.objects.get(id=pk)
+        form = PatientForm(instance=patient)
 
-    if request.method == 'POST':
-        form = PatientForm(request.POST, instance=patient)
-        if form.is_valid():
-            form.save()
-            return redirect('/patients_list')
+        if request.method == 'POST':
+            form = PatientForm(request.POST, instance=patient)
+            if form.is_valid():
+                form.save()
+                return redirect('/patients_list')
 
-    context = {'form': form}
-    return render(request, 'patients_app/update_patient.html', context)
+        context = {'form': form}
+        return render(request, 'patients_app/update_patient.html', context)
+    else:
+        return redirect('/login')
 
 def update_event(request, pk):
-    event = Event.objects.get(id=pk)
-    form = EventForm(instance=event)
+    if request.user.is_authenticated:
+        event = Event.objects.get(id=pk)
+        form = EventForm(instance=event)
 
-    if request.method == 'POST':
-        form = EventForm(request.POST, instance=event)
-        if form.is_valid():
-            form.save()
-            return redirect('/calendar')
+        if request.method == 'POST':
+            form = EventForm(request.POST, instance=event)
+            if form.is_valid():
+                form.save()
+                return redirect('/calendar')
 
-    context = {'form': form}
-    return render(request, 'patients_app/update_event.html', context)
+        context = {'form': form}
+        return render(request, 'patients_app/update_event.html', context)
+    else:
+        return redirect('/login')
 
 
 def ask_delete(request, pk):
-    patient = Patient.objects.get(id=pk)
+    if request.user.is_authenticated:
+        patient = Patient.objects.get(id=pk)
 
-    if request.method == "POST":
-        patient.delete()
-        return redirect('/patients_list')
-    return render(request, 'patients_app/delete.html', {'patient': patient})
+        if request.method == "POST":
+            patient.delete()
+            return redirect('/patients_list')
+        return render(request, 'patients_app/delete.html', {'patient': patient})
+    else:
+        return redirect('/login')
 
 def delete_event(request, pk):
-    event = Event.objects.get(id=pk)
+    if request.user.is_authenticated:
+        event = Event.objects.get(id=pk)
 
-    if request.method == "POST":
-        event.delete()
-        return redirect('/calendar')
-    return render(request, 'patients_app/delete_event.html', {'event': event})
-
+        if request.method == "POST":
+            event.delete()
+            return redirect('/calendar')
+        return render(request, 'patients_app/delete_event.html', {'event': event})
+    else:
+        return redirect('/login')
 
 # def calendar(request):
 #     return render(request, 'patients_app/calendar.html')
 
-class CalendarView(generic.ListView):
+class CalendarView(LoginRequiredMixin ,generic.ListView):
     model = Event
     template_name = 'patients_app/calendar.html'
 

@@ -7,6 +7,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('register/', views.RegisterPage.as_view(), name='register'),
     path('login/', views.CustomLoginView.as_view(), name='login'),
+    path('accounts/login/', views.CustomLoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
     path('patients_list', views.patients_list, name='patients_list'),
     path('create_patient', views.create_patient, name='create_patient'),
