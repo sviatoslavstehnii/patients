@@ -36,10 +36,6 @@ class Event(models.Model):
             raise ValidationError('Start time must be before end time')
         if self.end_time.time() >= datetime.time(hour=19):
             raise ValidationError('End time must be before 19:00')
-        if self.start_time.date() != self.end_time.date():
-            raise ValidationError('Start and end time must be on the same day')
-        if self.start_time.time() < datetime.time(hour=9):
-            raise ValidationError('Start time must be after 09:00')
     
 
     @property
