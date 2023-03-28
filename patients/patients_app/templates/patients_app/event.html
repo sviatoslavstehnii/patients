@@ -14,16 +14,17 @@
     crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="{% static 'patients_app/css/styles.css' %}">
 
-  <title>Calendar</title>
+  <title>Add Visit</title>
 </head>
 <body>
+  <div class="clearfix">
+    <a href="{% url 'calendar' %}"><img src="{% static 'images/arrow.png' %}" alt="backarrow" class="item"></a>
+  </div>
 
-  <h1 class="title">{% block title %}{% endblock %}</h1>
+  <div class="create_div"><p class="create">Add Visit</p></div>
+  <!-- <h1 class="title">{% block title %}{% endblock %}</h1> -->
 
   {% block content %}
-  <div class="clearfix">
-    <a class="btn btn-info left" href="{% url 'calendar' %}"> Calendar </a>
-  </div>
   
   {% if form.errors %}
       {% for field in form %}
@@ -47,7 +48,7 @@
                 {% csrf_token %}
                 <table class="form form-table">
                   {{ form }}
-                  <tr><td colspan="2"><button type="submit" class="btn btn-info right"> Submit </button></td></tr>
+                  <tr><td colspan="2"><button type="submit" class="submit"> Submit </button></td></tr>
                 </table>
               </form>
         </div>
