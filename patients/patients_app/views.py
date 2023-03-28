@@ -53,8 +53,10 @@ def create_patient(request):
     if request.method == 'POST':
         form = PatientForm(request.POST)
         if form.is_valid():
-            form.save()
-        return redirect('/patients_list')
+            patient = form.save(commit=False)
+            patient.user = request.user
+            patient.save()
+            return redirect('/patients_list')
 
     form = PatientForm()
     context = {

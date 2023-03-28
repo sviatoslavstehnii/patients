@@ -6,7 +6,8 @@ class PatientForm(forms.ModelForm):
 
     class Meta:
         model = Patient
-        fields = '__all__'
+        # fields = '__all__'
+        exclude = ['user']
 
 class EventForm(ModelForm):
   class Meta:
