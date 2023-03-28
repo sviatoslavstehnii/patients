@@ -2,13 +2,46 @@ from django.shortcuts import render, redirect, get_object_or_404
 from datetime import datetime, timedelta
 from django.utils.safestring import mark_safe
 from django.views import generic
-from django.contrib import messages
 from .utils import Calendar
 from .forms import PatientForm, EventForm
 import calendar as clndr
 from django.urls import reverse
 from .models import *
 from django.http import HttpResponseRedirect, HttpResponse
+ 
+from django.contrib.auth.views import LoginView
+from django.views.generic.edit import FormView
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
+from django.urls import reverse_lazy
+
+
+class CustomLoginView(LoginView):
+    template_name = 'patients_app/login.html'
+    fields = '__all__'
+    redirect_authenticated_user = True
+
+    def get_success_url(self):
+        return reverse_lazy('patients_list')
+
+class RegisterPage(FormView):
+    template_name = 'patients_app/register.html'
+    form_class = UserCreationForm
+    redirect_authenticated_user = True
+    success_url = reverse_lazy('patients_list')
+
+    def form_valid(self, form):
+        user = form.save()
+        if user is not None:
+            login(self.request, user)
+        return super(RegisterPage, self).form_valid(form)
+
+    def get(self, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            return HttpResponseRedirect('patients_list')
+        return super(RegisterPage, self).get(*args, **kwargs)
+
+
 
 def index(request):
     """View function for home page of site."""
@@ -30,13 +63,13 @@ def create_patient(request):
     return render(request, 'patients_app/create_patient.html', context)
 
 
-
 def patients_list(request):
     query = request.GET.get('q')
     if query:
         patients = Patient.objects.filter(name__icontains=query)
     else:
         patients = Patient.objects.all()
+    patients = Patient.objects.filter(user=request.user)
     return render(request, 'patients_app/patients_list.html', {'patients': patients})
 
 
@@ -95,7 +128,7 @@ class CalendarView(generic.ListView):
         context = super().get_context_data(**kwargs)
         d = get_date(self.request.GET.get('month', None))
         cal = Calendar(d.year, d.month)
-        html_cal = cal.formatmonth(withyear=True)
+        html_cal = cal.formatmonth(withyear=True, request=self.request)
         context['calendar'] = mark_safe(html_cal)
         context['prev_month'] = prev_month(d)
         context['next_month'] = next_month(d)

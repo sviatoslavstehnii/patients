@@ -2,6 +2,7 @@
 
 {% block body %}
 <body>
+
     <div class="container">
         <form class="d-flex" action="{% url 'search' %}" method='get' role="search" style="margin: 1rem; width: 30rem;">
             {% csrf_token %}
