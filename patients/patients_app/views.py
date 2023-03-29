@@ -59,8 +59,8 @@ def create_patient(request):
                 patient.user = request.user
                 patient.save()
                 return redirect('/patients_list')
-
-        form = PatientForm()
+        else:
+            form = PatientForm()
         context = {
             'form': form
         }
