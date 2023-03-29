@@ -61,8 +61,7 @@
                 <a href="{% url 'update_event' event.id %}" style="font-size: x-large;">{{ event.start_time|date:'H:i' }} - {{ event.end_time|date:'H:i' }} </a>
                 <form method="post" action="{% url 'delete_event' event.pk %}">
                     {% csrf_token %}
-                    <input type="submit" name="❌" class="card-link" value="❌" style="border: 1px solid #ccc; background-color: #e68d92; color: #333; padding: 0.5em 1em; text-decoration: none; font-weight: bold; border-radius: 3px; cursor: pointer;">
-                </form>
+                    <input type="submit" name="Cancel" class="submit3" value="Cancel">                  </form>
             </div>
             {% endfor %}
         </div>
