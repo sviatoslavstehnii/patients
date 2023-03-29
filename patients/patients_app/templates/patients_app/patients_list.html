@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block body %}
 <body>
 
@@ -9,7 +11,7 @@
             <input class="form-control me-2" type="search" name="q" placeholder="Name" aria-label="Search">
             <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
-        <a href="{% url 'create_patient' %}" style="margin: 1rem;display: inline-block; border: 1px solid #ccc; background-color: #eaeaea; color: #000; padding: 0.5em 1em; text-decoration: none; font-weight: bold; border-radius: 3px; cursor: pointer;">&#43;</a>
+        <a href="{% url 'create_patient' %}"><img src="{% static 'images/plus.png' %}" alt="backarrow" class="plus"></a>
         {% for patient in patients %}
         <div class="card" style="margin: 1rem;">
             <div class="card-body">
@@ -17,9 +19,8 @@
                 <p class="card-text">Doctor: {{ patient.doctor }}</p>
                 <p class="card-text">{{ patient.phone }}</p>
                 <p class="card-text">{{ patient.medical_history }}</p>
-                <a href="{% url 'update_patient' patient.id %}" style="display: inline-block;
-                border: 1px solid #ccc; background-color: #d1eaf9; color: #333; padding: 0.5em 1em; text-decoration: none; font-weight: bold; border-radius: 3px; cursor: pointer;">Edit</a>
-                <a href="{% url 'ask_delete' patient.id %}" style="display: inline-block; border: 1px solid #ccc; background-color: #e68d92; color: #000; padding: 0.5em 1em; text-decoration: none; font-weight: bold; border-radius: 3px; cursor: pointer;">Delete</a>
+                <a href="{% url 'update_patient' patient.id %}" class='edit'>Edit</a>
+                <a href="{% url 'ask_delete' patient.id %}" class="delete">Delete</a>
               </div>
         </div>
         {% endfor %}
