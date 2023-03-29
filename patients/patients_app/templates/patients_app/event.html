@@ -21,7 +21,7 @@
     <a href="{% url 'calendar' %}"><img src="{% static 'images/arrow.png' %}" alt="backarrow" class="item"></a>
   </div>
 
-  <div class="create_div"><p class="create">Add Visit</p></div>
+  <!-- <div class="create_div"><p class="create">Add Visit</p></div> -->
   <!-- <h1 class="title">{% block title %}{% endblock %}</h1> -->
 
   {% block content %}
@@ -44,6 +44,7 @@
   <div class="container text-center">
     <div class="row align-items-start">
         <div class="col">
+            <p class="create">Add Visit</p>
             <form method="post">
                 {% csrf_token %}
                 <table class="form form-table">
@@ -54,7 +55,7 @@
         </div>
         {% if events %}
         <div class="col">
-            <h2>Current visits on this day</h2>
+            <p class="create">Current visits on this day</p>
             {% for event in events %}
             <div class="event" >
                 <a href="{% url 'update_event' event.id %}" style="font-size: x-large;">{{ event.start_time|date:'H:i' }} - {{ event.end_time|date:'H:i' }} </a>
