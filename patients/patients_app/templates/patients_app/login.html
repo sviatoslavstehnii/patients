@@ -1,9 +1,23 @@
-<h1>Login</h1>
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'patients_app/css/styles.css' %}">
+    <title>Login</title>
+</head>
+<body>
+    <h1 class="create">Login</h1>
 
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Login</button>
+    <button type="submit" class="button">Login</button>
 </form>
 
-<p>Don't have an account? <a href="{% url 'register' %}">Register</a></p>
+<p class="main-text">Don't have an account? <a href="{% url 'register' %}">Register</a></p>
+</body>
+</html>
