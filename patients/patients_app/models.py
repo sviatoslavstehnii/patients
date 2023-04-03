@@ -1,6 +1,8 @@
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+import datetime
 
 class Patient(models.Model):
     """Model representing a patient."""
@@ -29,6 +31,18 @@ class Event(models.Model):
     description = models.TextField()
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
+    def clean(self):
+        super().clean()
+        if self.start_time > self.end_time:
+            raise ValidationError('Start time must be before end time')
+        if self.start_time == self.end_time:
+            raise ValidationError('Start time must be before end time')
+        if self.start_time.time() < datetime.time(hour=9, minute=0):
+            raise ValidationError('Start time must be after 9:00 AM')
+        if self.end_time.time() > datetime.time(hour=19, minute=0):
+            raise ValidationError('End time must be before 7:00 PM')
+        if self.start_time.date() != self.end_time.date():
+            raise ValidationError('Start time and end time must be on the same day') 
 
     @property
     def get_html_url(self):

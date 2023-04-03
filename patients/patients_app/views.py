@@ -156,8 +156,8 @@ class CalendarView(LoginRequiredMixin ,generic.ListView):
 def get_date(req_month):
     if req_month:
         year, month = (int(x) for x in req_month.split('-'))
-        return datetime(year, month, day=1)
-    return datetime.today()
+        return datetime.datetime(year, month, day=1)
+    return datetime.datetime.today()
 
 def prev_month(d):
     first = d.replace(day=1)
@@ -172,10 +172,11 @@ def next_month(d):
     month = 'month=' + str(next_month.year) + '-' + str(next_month.month)
     return month
 
-def event(request, event_id=None, day_id=None):
+def event(request, event_id=None, date=None):
     context = {'events': None}
-    if day_id:
-        events = Event.objects.filter(start_time__day=day_id)
+    if date:
+        date = datetime.datetime.strptime(date, '%Y-%m-%d')
+        events = Event.objects.filter(start_time__year=date.year, start_time__month=date.month, start_time__day=date.day)
         events = events.filter(user=request.user)
         context['events'] = events
     if event_id:

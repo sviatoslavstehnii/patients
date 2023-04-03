@@ -11,6 +11,7 @@ class Calendar(HTMLCalendar):
     # formats a day as a td
     # filter events by day
     def formatday(self, day, events):
+        date = f'{self.year}-{self.month}-{day}'
         events_per_day = events.filter(start_time__day=day)
         events_per_day = events_per_day.order_by('start_time')
         occupied_hours = []
@@ -30,7 +31,7 @@ class Calendar(HTMLCalendar):
             else:
                 d += f'<li style="list-style-type: none; background-color:#03293972; padding: 3px; border-radius: 0.3em 0.3em 0.3em 0.3em;"> {i[0]} - {i[1]} free</li>'
         if day != 0:
-            return f"<td><a href='events/{day}' style='color: #E3FCFF !important;' class='date'>{day}</a><ul> {d} </ul></td>"
+            return f"<td><a href='events/{date}' style='color: #E3FCFF !important;' class='date'>{day}</a><ul> {d} </ul></td>"
         return '<td></td>'
 
     # formats a week as a tr
@@ -44,8 +45,6 @@ class Calendar(HTMLCalendar):
     # filter events by year and month
     def formatmonth(self, withyear=True, request=None):
         events = Event.objects.filter(start_time__year=self.year, start_time__month=self.month, user=request.user)
-        # events = events.filter(user=request.user)
-
         cal = f'<table border="0" cellpadding="0" cellspacing="0" class="calendar">\n'
         cal += f'{self.formatmonthname(self.year, self.month, withyear=withyear)}\n'
         cal += f'{self.formatweekheader()}\n'
@@ -68,5 +67,18 @@ def schedule(occupied_slots):
         if x in free_slots:
             result[i] = list(x) + ['free']
             result[i] = tuple(result[i])
+        if '19:00' in result[i] and 'free' not in result[i]:
+            result.pop()
+    for visit in result:
+        hour1 = int(visit[0].split(':')[0])
+        hour2 = int(visit[1].split(':')[0])
+        minute1 = int(visit[0].split(':')[1])
+        minute2 = int(visit[1].split(':')[1])
+        if hour1 == hour2:
+            if minute2 - minute1 < 30 and 'free' in visit:
+                result.remove(visit)
+        elif hour2 - hour1 == 1:
+            if minute2 + 60 - minute1 < 30 and 'free' in visit:
+                result.remove(visit)
 
     return result
