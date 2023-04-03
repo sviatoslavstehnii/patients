@@ -25,11 +25,12 @@ class Calendar(HTMLCalendar):
             hours = schedule(occupied_hours)
         elif len(events_per_day) == 1:
             hours = [('9:00', occupied_hours[0][0], 'free'), (occupied_hours[0][0], occupied_hours[0][1]), (occupied_hours[0][1], '19:00', 'free')]
+            adjust_schedule(hours)
         for i in hours:
             if len(i) == 2:
-                d += f'<li style="list-style-type: none; background-color:#189AB4; padding: 3px; border-radius: 0.3em 0.3em 0.3em 0.3em;"> {i[0]} - {i[1]} </li>'
+                d += f'<li style="list-style-type: none; background-color:#189AB4; padding: 3px; border: 1px solid black; border-radius: 0.3em 0.3em 0.3em 0.3em;"> {i[0]} - {i[1]} </li>'
             else:
-                d += f'<li style="list-style-type: none; background-color:#03293972; padding: 3px; border-radius: 0.3em 0.3em 0.3em 0.3em;"> {i[0]} - {i[1]} free</li>'
+                d += f'<li style="list-style-type: none; background-color:#03293972; padding: 3px;  border: 1px solid black; border-radius: 0.3em 0.3em 0.3em 0.3em;"> {i[0]} - {i[1]} free</li>'
         if day != 0:
             return f"<td><a href='events/{date}' style='color: #E3FCFF !important;' class='date'>{day}</a><ul> {d} </ul></td>"
         return '<td></td>'
@@ -52,6 +53,18 @@ class Calendar(HTMLCalendar):
             cal += f'{self.formatweek(week, events)}\n'
         return cal
 
+def adjust_schedule(occupied_slots):
+    for visit in occupied_slots:
+        hour1 = int(visit[0].split(':')[0])
+        hour2 = int(visit[1].split(':')[0])
+        minute1 = int(visit[0].split(':')[1])
+        minute2 = int(visit[1].split(':')[1])
+        if hour1 == hour2:
+            if minute2 - minute1 < 30 and 'free' in visit:
+                occupied_slots.remove(visit)
+        elif hour2 - hour1 == 1:
+            if minute2 + 60 - minute1 < 30 and 'free' in visit:
+                occupied_slots.remove(visit)
 
 def schedule(occupied_slots):
     result = []
@@ -69,16 +82,5 @@ def schedule(occupied_slots):
             result[i] = tuple(result[i])
         if '19:00' in result[i] and 'free' not in result[i]:
             result.pop()
-    for visit in result:
-        hour1 = int(visit[0].split(':')[0])
-        hour2 = int(visit[1].split(':')[0])
-        minute1 = int(visit[0].split(':')[1])
-        minute2 = int(visit[1].split(':')[1])
-        if hour1 == hour2:
-            if minute2 - minute1 < 30 and 'free' in visit:
-                result.remove(visit)
-        elif hour2 - hour1 == 1:
-            if minute2 + 60 - minute1 < 30 and 'free' in visit:
-                result.remove(visit)
-
+    adjust_schedule(result)
     return result
