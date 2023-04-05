@@ -26,15 +26,24 @@ class Calendar(HTMLCalendar):
         elif len(events_per_day) == 1:
             hours = [('9:00', occupied_hours[0][0], 'free'), (occupied_hours[0][0], occupied_hours[0][1]), (occupied_hours[0][1], '19:00', 'free')]
             adjust_schedule(hours)
-        for i in hours:
-            if len(i) == 2:
-                d += f'<li style="list-style-type: none; background-color:#189AB4; padding: 3px; border: 1px solid black; border-radius: 0.3em 0.3em 0.3em 0.3em;"> {i[0]} - {i[1]} </li>'
-            else:
-                d += f'<li style="list-style-type: none; background-color:#03293972; padding: 3px;  border: 1px solid black; border-radius: 0.3em 0.3em 0.3em 0.3em;"> {i[0]} - {i[1]} free</li>'
-        if day != 0:
-            return f"<td><a href='events/{date}' style='color: #E3FCFF !important;' class='date'>{day}</a><ul> {d} </ul></td>"
-        return '<td></td>'
 
+        hours_events = []
+        occupied_dct = {hour:event for hour, event in zip(occupied_hours, events_per_day)}
+        for hour in hours:
+            if hour not in occupied_dct:
+                hours_events.append((hour, None))
+            else:
+                hours_events.append((hour, occupied_dct[hour]))    
+
+        for hour, event in hours_events:
+            if len(hour) == 2:
+                d += f'<li style="list-style-type: none; background-color:#189AB4; padding: 3px; border: 1px solid black; border-radius: 0.3em 0.3em 0.3em 0.3em;"><a href="update_event/{event.id}/"style="color: white;"text-decoration: none;>{hour[0]} - {hour[1]}</a> </li>'
+            else:
+                d += f'<li style="list-style-type: none; background-color:#03293972; padding: 3px;  border: 1px solid black; border-radius: 0.3em 0.3em 0.3em 0.3em;"> {hour[0]} - {hour[1]} free</li>'
+        if day != 0:
+            return f"<td style='border-radius: 0.5em;background-color: #E3FCFF;'><a href='events/{date}' style='color: #248b81 !important;' class='date'>{day}</a><ul> {d} </ul></td>"
+        return '<td style="border-radius: 0.5em; background-color: #E3FCFF;"></td>'
+    
     # formats a week as a tr
     def formatweek(self, theweek, events):
         week = ''
@@ -46,7 +55,7 @@ class Calendar(HTMLCalendar):
     # filter events by year and month
     def formatmonth(self, withyear=True, request=None):
         events = Event.objects.filter(start_time__year=self.year, start_time__month=self.month, user=request.user)
-        cal = f'<table border="0" cellpadding="0" cellspacing="0" class="calendar">\n'
+        cal = f'<table style="border-spacing: 10px;border-collapse: separate;" border="0" cellpadding="0" cellspacing="0" class="calendar">\n'
         cal += f'{self.formatmonthname(self.year, self.month, withyear=withyear)}\n'
         cal += f'{self.formatweekheader()}\n'
         for week in self.monthdays2calendar(self.year, self.month):

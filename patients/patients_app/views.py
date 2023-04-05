@@ -172,7 +172,7 @@ def next_month(d):
     month = 'month=' + str(next_month.year) + '-' + str(next_month.month)
     return month
 
-def event(request, event_id=None, date=None):
+def event(request, event_id=None, date=None, pk=None):
     context = {'events': None}
     if date:
         date = datetime.datetime.strptime(date, '%Y-%m-%d')

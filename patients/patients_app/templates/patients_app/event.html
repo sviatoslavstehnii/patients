@@ -58,7 +58,7 @@
             <p class="create">Current visits on this day</p>
             {% for event in events %}
             <div class="event" >
-                <a href="{% url 'update_event' event.id %}" style="font-size: x-large;">{{ event.start_time|date:'H:i' }} - {{ event.end_time|date:'H:i' }} </a>
+                <a href="{% url 'calendar_update_event' event.id %}" style="font-size: x-large;">{{ event.start_time|date:'H:i' }} - {{ event.end_time|date:'H:i' }} </a>
                 <form method="post" action="{% url 'delete_event' event.pk %}">
                     {% csrf_token %}
                     <input type="submit" name="Cancel" class="submit3" value="Cancel">                  </form>
