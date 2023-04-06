@@ -33,17 +33,20 @@ class Event(models.Model):
     end_time = models.DateTimeField()
     def clean(self):
         super().clean()
-        if self.start_time > self.end_time:
-            raise ValidationError('Start time must be before end time')
-        if self.start_time == self.end_time:
+        if self.start_time >= self.end_time:
             raise ValidationError('Start time must be before end time')
         if self.start_time.time() < datetime.time(hour=9, minute=0):
             raise ValidationError('Start time must be after 9:00 AM')
         if self.end_time.time() > datetime.time(hour=19, minute=0):
             raise ValidationError('End time must be before 7:00 PM')
         if self.start_time.date() != self.end_time.date():
-            raise ValidationError('Start time and end time must be on the same day') 
-
+            raise ValidationError('Start time and end time must be on the same day')
+        overlapping_events = Event.objects.filter(
+            models.Q(start_time__range=(self.start_time, self.end_time)) |
+            models.Q(end_time__range=(self.start_time, self.end_time))
+        ).exclude(id=self.id)
+        if overlapping_events.exists():
+            raise ValidationError('This event overlaps with an existing event')
     @property
     def get_html_url(self):
         url = reverse('event_edit', args=(self.id,))

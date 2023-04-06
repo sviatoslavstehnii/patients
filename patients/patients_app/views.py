@@ -182,7 +182,7 @@ def event(request, event_id=None, date=None, pk=None):
     if event_id:
         instance = get_object_or_404(Event, pk=event_id)
     else:
-        instance = Event()
+        instance = Event(start_time=date, end_time=date, user=request.user)
 
     if request.method == 'POST':
         form = EventForm(request.POST, instance=instance)

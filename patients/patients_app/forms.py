@@ -36,8 +36,6 @@ class EventForm(ModelForm):
     super(EventForm, self).__init__(*args, **kwargs)
     self.fields['start_time'].input_formats = ('%Y-%m-%dT%H:%M',)
     self.fields['end_time'].input_formats = ('%Y-%m-%dT%H:%M',)
-    self.fields['start_time'].widget.attrs['min'] = datetime.now().strftime('%Y-%m-%dT%H:%M')
-    self.fields['end_time'].widget.attrs['min'] = self.fields['start_time'].widget.attrs['min']
     self.fields['start_time'].widget.attrs.update({'class': 'form-control'})
     self.fields['end_time'].widget.attrs.update({'class': 'form-control'})
     self.fields['description'].widget.attrs.update({'class': 'form-control-notes', 'placeholder': 'Notes'})

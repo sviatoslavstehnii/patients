@@ -37,7 +37,7 @@ class Calendar(HTMLCalendar):
 
         for hour, event in hours_events:
             if len(hour) == 2:
-                d += f'<li style="list-style-type: none; background-color:#189AB4; padding: 3px; border: 1px solid black; border-radius: 0.3em 0.3em 0.3em 0.3em;"><a href="update_event/{event.id}/"style="color: white;"text-decoration: none;>{hour[0]} - {hour[1]}</a> </li>'
+                d += f'<li style="list-style-type: none; background-color:#189AB4; padding: 3px; border: 1px solid black; border-radius: 0.3em 0.3em 0.3em 0.3em;"><button onclick="location.href=\'update_event/{event.id}/\';" style="background-color:#189AB4; color: white; border:none; cursor:pointer;">{hour[0]} - {hour[1]}</button></li>'
             else:
                 d += f'<li style="list-style-type: none; background-color:#03293972; padding: 3px;  border: 1px solid black; border-radius: 0.3em 0.3em 0.3em 0.3em;"> {hour[0]} - {hour[1]} free</li>'
         if day != 0:
@@ -70,10 +70,11 @@ def adjust_schedule(occupied_slots):
         minute2 = int(visit[1].split(':')[1])
         if hour1 == hour2:
             if minute2 - minute1 < 30 and 'free' in visit:
-                occupied_slots.remove(visit)
+                del occupied_slots[occupied_slots.index(visit)]
         elif hour2 - hour1 == 1:
             if minute2 + 60 - minute1 < 30 and 'free' in visit:
-                occupied_slots.remove(visit)
+                del occupied_slots[occupied_slots.index(visit)]
+
 
 def schedule(occupied_slots):
     result = []
