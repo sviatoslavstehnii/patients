@@ -7,11 +7,11 @@
 <div class="card" style="display: flex; justify-content: center; align-items: center; margin-top: 17rem;">
     <p class="card-title">Are you sure you want to delete?</p>
     <!-- <div class="card-body"> -->
-        <a href="{% url 'patients_list' %}" class="card-link" style="border: 1px solid #ccc; background-color: #d1eaf9; color: #333; padding: 0.5em 1em; text-decoration: none; font-weight: bold; border-radius: 3px; cursor: pointer;">Cancel</a>
+        <a href="{% url 'patients_list' %}" class="card-link" style="border: 1px solid #ccc; background-color: #E3FCFF; color: #333; padding: 0.5em 1em; text-decoration: none; font-weight: bold; border-radius: 3px; cursor: pointer;">Cancel</a>
 
         <form method="post">
             {% csrf_token %}
-            <input type="submit" name="Confirm" class="card-link" value="Confirm" style="border: 1px solid #ccc; background-color: #e68d92; color: #333; padding: 0.5em 1em; text-decoration: none; font-weight: bold; border-radius: 3px; cursor: pointer;">
+            <input type="submit" name="Confirm" class="card-link" value="Confirm" style="border: 1px solid #ccc; background-color: #05445E; color: #f6f1f1; padding: 0.5em 1em; text-decoration: none; font-weight: bold; border-radius: 3px; cursor: pointer;">
         </form>
     <!-- </div> -->
 
