@@ -11,11 +11,7 @@ class Patient(models.Model):
     name = models.CharField(max_length=200)
     age = models.IntegerField()
     sex = models.CharField(choices=SEXES, max_length=1)
-    address = models.CharField(max_length=200)
     phone = models.CharField(max_length=200)
-    email = models.CharField(max_length=200)
-    doctor = models.CharField(max_length=200)
-    date = models.DateField()
     medical_history = models.TextField()
 
     def __str__(self) -> str:
@@ -28,7 +24,6 @@ class Patient(models.Model):
 class Event(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, null=True, blank=True)
-    title = models.CharField(max_length=200)
     description = models.TextField()
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
