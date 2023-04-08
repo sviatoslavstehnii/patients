@@ -23,6 +23,7 @@ class PatientForm(forms.ModelForm):
       self.fields['medical_history'].widget.attrs.update({'class': 'form-control-notes', 'placeholder': 'Medical History'})
 
 class EventForm(ModelForm):
+  patient = forms.ModelChoiceField(queryset=Patient.objects.all(), required=True)
   class Meta:
     model = Event
     widgets = {
@@ -39,6 +40,7 @@ class EventForm(ModelForm):
     self.fields['start_time'].widget.attrs.update({'class': 'form-control'})
     self.fields['end_time'].widget.attrs.update({'class': 'form-control'})
     self.fields['description'].widget.attrs.update({'class': 'form-control-notes', 'placeholder': 'Notes'})
-    self.fields['title'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Patient'})
+    self.fields['title'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Title'})
     self.fields['start_time'].widget.attrs['min'] = datetime.now().strftime('%Y-%m-%dT%H:%M')
     self.fields['end_time'].widget.attrs['min'] = self.fields['start_time'].widget.attrs['min']
+    self.fields['patient'].widget.attrs.update({'class': 'form-control'})
