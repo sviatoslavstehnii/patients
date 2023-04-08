@@ -23,7 +23,7 @@ class PatientForm(forms.ModelForm):
       self.fields['medical_history'].widget.attrs.update({'class': 'form-control-notes', 'placeholder': 'Medical History'})
 
 class EventForm(ModelForm):
-  patient = forms.ModelChoiceField(queryset=Patient.objects.all(), required=True)
+  
   class Meta:
     model = Event
     widgets = {
@@ -34,7 +34,9 @@ class EventForm(ModelForm):
     exclude = ['user']
 
   def __init__(self, *args, **kwargs):
+    user = kwargs.pop('user', None)
     super(EventForm, self).__init__(*args, **kwargs)
+    self.fields['patient'] = forms.ModelChoiceField(queryset=Patient.objects.filter(user=user), widget=forms.Select(attrs={'class': 'form-control'}))
     self.fields['start_time'].input_formats = ('%Y-%m-%dT%H:%M',)
     self.fields['end_time'].input_formats = ('%Y-%m-%dT%H:%M',)
     self.fields['start_time'].widget.attrs.update({'class': 'form-control'})

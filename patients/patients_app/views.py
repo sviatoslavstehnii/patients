@@ -100,10 +100,10 @@ def update_patient(request, pk):
 def update_event(request, pk):
     if request.user.is_authenticated:
         event = Event.objects.get(id=pk)
-        form = EventForm(instance=event)
+        form = EventForm(instance=event, user=request.user)
 
         if request.method == 'POST':
-            form = EventForm(request.POST, instance=event)
+            form = EventForm(request.POST, instance=event, user=request.user)
             if form.is_valid():
                 form.save()
                 return redirect('/calendar')
@@ -185,7 +185,7 @@ def event(request, event_id=None, date=None, pk=None):
         instance = Event(start_time=date, end_time=date, user=request.user)
 
     if request.method == 'POST':
-        form = EventForm(request.POST, instance=instance)
+        form = EventForm(request.POST, instance=instance, user=request.user)
         if form.is_valid():
             events = Event.objects.all()
             events = events.filter(start_time__day=form.cleaned_data['start_time'].day)
@@ -199,7 +199,7 @@ def event(request, event_id=None, date=None, pk=None):
             event.save()
             return HttpResponseRedirect(reverse('calendar'))
     else:
-        form = EventForm(instance=instance)
+        form = EventForm(instance=instance, user=request.user)
 
     context['form'] = form
     return render(request, 'patients_app/event.html', context)
