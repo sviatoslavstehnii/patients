@@ -15,8 +15,7 @@
         {% for patient in patients %}
         <div class="card" style="margin: 1rem;">
             <div class="card-body">
-                <h5 class="card-title">{{ patient.name }}, {{ patient.age }}</h5>
-                <p class="card-text">Doctor: {{ patient.doctor }}</p>
+                <h5 class="patient-title">{{ patient.name }}, {{ patient.age }}</h5>
                 <p class="card-text">{{ patient.phone }}</p>
                 <p class="card-text">{{ patient.medical_history }}</p>
                 <a href="{% url 'update_patient' patient.id %}" class='edit'>Edit</a>

@@ -11,11 +11,7 @@ class Patient(models.Model):
     name = models.CharField(max_length=200)
     age = models.IntegerField()
     sex = models.CharField(choices=SEXES, max_length=1)
-    address = models.CharField(max_length=200)
     phone = models.CharField(max_length=200)
-    email = models.CharField(max_length=200)
-    doctor = models.CharField(max_length=200)
-    date = models.DateField()
     medical_history = models.TextField()
 
     def __str__(self) -> str:
@@ -27,7 +23,7 @@ class Patient(models.Model):
 
 class Event(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
-    title = models.CharField(max_length=200)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, null=True, blank=True)
     description = models.TextField()
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
@@ -42,9 +38,11 @@ class Event(models.Model):
         if self.start_time.date() != self.end_time.date():
             raise ValidationError('Start time and end time must be on the same day')
         overlapping_events = Event.objects.filter(
-            models.Q(start_time__range=(self.start_time, self.end_time)) |
-            models.Q(end_time__range=(self.start_time, self.end_time))
-        ).exclude(id=self.id)
+    models.Q(user=self.user) &
+    (models.Q(start_time__range=(self.start_time, self.end_time)) |
+    models.Q(end_time__range=(self.start_time, self.end_time)))
+).exclude(id=self.id)
+
         if overlapping_events.exists():
             raise ValidationError('This event overlaps with an existing event')
     @property

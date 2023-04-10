@@ -25,7 +25,7 @@ class Calendar(HTMLCalendar):
             hours = schedule(occupied_hours)
         elif len(events_per_day) == 1:
             hours = [('9:00', occupied_hours[0][0], 'free'), (occupied_hours[0][0], occupied_hours[0][1]), (occupied_hours[0][1], '19:00', 'free')]
-            adjust_schedule(hours)
+            hours = adjust_schedule(hours)
 
         hours_events = []
         occupied_dct = {hour:event for hour, event in zip(occupied_hours, events_per_day)}
@@ -33,17 +33,17 @@ class Calendar(HTMLCalendar):
             if hour not in occupied_dct:
                 hours_events.append((hour, None))
             else:
-                hours_events.append((hour, occupied_dct[hour]))    
+                hours_events.append((hour, occupied_dct[hour]))
 
         for hour, event in hours_events:
             if len(hour) == 2:
-                d += f'<li style="list-style-type: none; background-color:#189AB4; padding: 3px; border: 1px solid black; border-radius: 0.3em 0.3em 0.3em 0.3em;"><button onclick="location.href=\'update_event/{event.id}/\';" style="background-color:#189AB4; color: white; border:none; cursor:pointer;"> {hour[0]} - {hour[1]} </button></li>'
+                d += f'<li style="list-style-type: none; margin-bottom: 1px; background-color:#05445E; padding: 3px; border: 0px solid black; border-radius: 0.3em 0.3em 0.3em 0.3em;"><button onclick="location.href=\'update_event/{event.id}/\';" style="background-color:#05445E; color: #E3FCFF; border:none; cursor:pointer;"> {hour[0]} - {hour[1]} </button></li>'
             else:
-                d += f'<li style="list-style-type: none; font-style: italic; background-color:#7FB3D5; padding: 3px;  border: 1px solid black; border-radius: 0.3em 0.3em 0.3em 0.3em;">{hour[0]} - {hour[1]} free </li>'
+                d += f'<li style="list-style-type: none; margin-bottom: 1px; font-style: italic; background-color:#03293935; padding: 3px;  border: 0px solid black; border-radius: 0.3em 0.3em 0.3em 0.3em;">{hour[0]} - {hour[1]} free </li>'
         if day != 0:
-            return f"<td style='border-radius: 0.5em;background-color: #E3FCFF;'><a href='events/{date}' style='color: #248b81 !important; text-decoration: none;' class='date'>{day}</a><ul> {d} </ul></td>"
-        return '<td style="border-radius: 0.5em; background-color: #E3FCFF;"></td>'
-    
+            return f"<td style='border-radius: 0.8em;border: 0px;background-color: #B9DCDF;'><a href='events/{date}' style='color: #248b81 !important; text-decoration: none;' class='date'>{day}</a><ul> {d} </ul></td>"
+        return '<td style="border-radius: 0.8em; border: 0px; background-color: #B9DCDF;"></td>'
+
     # formats a week as a tr
     def formatweek(self, theweek, events):
         week = ''
@@ -69,8 +69,10 @@ def adjust_schedule(occupied_slots):
         hour2 = int(visit[1].split(':')[0])
         minute1 = int(visit[0].split(':')[1])
         minute2 = int(visit[1].split(':')[1])
+        print(visit)
         if hour1 == hour2:
             if minute2 - minute1 < 30 and 'free' in visit:
+                print('adsnjandanjd')
                 # del occupied_slots[occupied_slots.index(visit)]
                 result.remove(visit)
         elif hour2 - hour1 == 1:
@@ -78,6 +80,7 @@ def adjust_schedule(occupied_slots):
             if minute2 + 60 - minute1 < 30 and 'free' in visit:
                 # del occupied_slots[occupied_slots.index(visit)]
                 result.remove(visit)
+    print(result)
     return result
 
 

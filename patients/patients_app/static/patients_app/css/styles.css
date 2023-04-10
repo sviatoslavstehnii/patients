@@ -3,10 +3,13 @@
     width: 98%;
     margin: auto;
     font-size: 13px;
+    background-color: #E3FCFF !important;
+    border-radius: 1em 1em 1em 1em;
+    color:#05445E !important
   }
   
   .calendar tr, .calendar td {
-    border: 1px solid black;
+    border: 0px solid black;
   }
   
   .calendar th {
@@ -23,6 +26,7 @@
   
   .month {
     font-size: 25px;
+    color: #05445E;
   }
   
   .date {
@@ -96,6 +100,7 @@
     font-size: xx-large;
     margin: 5px;
   }
+
   .form-control{
     background-color: #03293972 !important;
     padding: 15px !important;
@@ -105,6 +110,17 @@
     width: 400px !important;
     margin:5px;
   }
+
+  .form-control-patient{
+    background-color: #03293972 !important;
+    padding: 15px !important;
+    border-radius: 1em 1em 1em 1em !important;
+    border:0ch !important;
+    color: #E3FCFF !important;
+    width: 400px !important;
+    margin:5px;
+  }
+
   .form-control-first{
     background-color: #03293972;
     padding: 15px;
@@ -223,13 +239,13 @@
   
   .card{
     margin: 1rem;
-    background-color: #E3FCFF;
+    background-color: #e3fcff;
     border-width: 0px;
     border-radius: 1em 1em 1em 1em !important;
   }
   
   .card-body{
-    background-color: #E3FCFF;
+    background-color: #e3fcff;
     border-width: 0px;
     border-radius: 1em 1em 1em 1em !important;
   }
@@ -238,7 +254,15 @@
     font-family: 'Fira Sans', sans-serif;
     font-family: 'Outfit', sans-serif !important;
     font-weight:700;
+    color: #e3fcff !important;
+    margin-right: 10px;
+  }
+  .patient-title{
+    font-family: 'Fira Sans', sans-serif;
+    font-family: 'Outfit', sans-serif !important;
+    font-weight:700;
     color: #05445E !important;
+    margin-right: 10px;
   }
   .card-text{
     font-family: 'Fira Sans', sans-serif;
@@ -294,4 +318,8 @@
   .navbar-brand{
     color: #E3FCFF !important;
     font-weight:700;
+  }
+
+  .register-position{
+    margin-left: 100px;
   }
