@@ -18,18 +18,22 @@
           </button>
           <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
             <div class="offcanvas-body">
-              <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+              <ul class="navbar-nav justify-content-start flex-grow-1 pe-3">
+                {% if request.user.is_authenticated %}
+                <h6> You are logged in as {{ request.user }} <a style="color:rgb(255, 255, 255);" href="{% url 'logout' %}">Logout</a></h1>
+
+                {% else %}
+                    <h6>You are not logged in <a style="color:rgb(255, 255, 255);" href="{% url 'login' %}">Login</a></h1>
+                {% endif %}
+                <br>
                 <li class="nav-item">
                   <a class="nav-link" href="/create_patient">Add Patient</a>
                 </li>
                 <li class="nav-item">
-                   <a class="nav-link" href="/patients_list">Patients List</a>
+                   <a class="nav-link" href="/patients_list">View Patients</a>
                 </li>
-                <!-- <li class="nav-item">
-                  <a class="nav-link" href="/add_visit">Add Visit</a>
-                </li> -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/calendar">Calendar</a>
+                    <a class="nav-link" href="/calendar">View Calendar</a>
                 </li>
               </ul>
             </div>

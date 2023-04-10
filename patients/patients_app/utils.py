@@ -69,18 +69,12 @@ def adjust_schedule(occupied_slots):
         hour2 = int(visit[1].split(':')[0])
         minute1 = int(visit[0].split(':')[1])
         minute2 = int(visit[1].split(':')[1])
-        print(visit)
         if hour1 == hour2:
             if minute2 - minute1 < 30 and 'free' in visit:
-                print('adsnjandanjd')
-                # del occupied_slots[occupied_slots.index(visit)]
                 result.remove(visit)
         elif hour2 - hour1 == 1:
-            # print(minute2, minute1)
             if minute2 + 60 - minute1 < 30 and 'free' in visit:
-                # del occupied_slots[occupied_slots.index(visit)]
                 result.remove(visit)
-    print(result)
     return result
 
 
@@ -100,6 +94,5 @@ def schedule(occupied_slots):
             result[i] = tuple(result[i])
         if '19:00' in result[i] and 'free' not in result[i]:
             result.pop()
-    # print(result)
     result = adjust_schedule(result)
     return result

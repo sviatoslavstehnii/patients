@@ -5,14 +5,27 @@
 
 <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
     <div style="width: 50%;
-    text-align: center;">
-        {% if request.user.is_authenticated %}
-        <h1> You are logged in as {{ request.user }}</h1>
-        <a style="color:black;" href="{% url 'logout' %}">Logout</a>
-    {% else %}
-        <h1>You are not logged in</h1>
-        <a style="color:black;" href="{% url 'login' %}">Login</a>
-    {% endif %}
+    text-align: center">
+        <h1 style="font-size: 3rem; color: #E3FCFF;">Welcome to the Patient Management System</h1>
+        <p style="font-size: 1.5rem; color: #E3FCFF;">Please select an option from the menu above</p>
+        <br style="height: 1px; color: #E3FCFF">
+
+        <div class="container text-center" style="margin-top: 2em; color: #E3FCFF">
+            <div class="row align-items-start">
+              <div class="col">
+                <h3>Add Patient</h3>
+                You can add a new patient here. Fill out the form and click submit.
+              </div>
+              <div class="col">
+                <h3>View Patients</h3>
+                Search for a patient by name in your list. Edit and delete patients here.
+              </div>
+              <div class="col">
+                <h3>View Calendar</h3>
+                Create visits for patients here. You can also cancel visits and edit patient information.
+              </div>
+            </div>
+          </div>
     </div>
 
 </div>
