@@ -36,7 +36,7 @@ After autentification you can move on site by side menu:
 ### 'Add patient' 
 On this page you can add patient to your patients list.
 
-![image](https://user-images.githubusercontent.com/116711001/231285305-93ac7f3f-1c90-46b0-b3b4-ca4a408c2a6d.png)
+![image](https://user-images.githubusercontent.com/116711001/231386356-1579986f-7a21-4818-8531-f7546ec8a4b3.png)
 
 ### 'View patients' 
 you can to look on all your patients.
@@ -59,6 +59,8 @@ Here is your calendar to enroll patients and moderate their admission.
 Tup to buttom **'New event'** for creating new visit.
 
 ![image](https://user-images.githubusercontent.com/116711001/231285956-46386269-6bf1-4188-a011-e209a83afa28.png)
+
+![image](https://user-images.githubusercontent.com/116711001/231386703-5dbb2439-8a66-4e2e-8cc0-87252e4ddb5f.png)
 
 ## Local run
 
